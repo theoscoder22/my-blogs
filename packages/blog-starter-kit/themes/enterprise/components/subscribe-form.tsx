@@ -39,24 +39,25 @@ export const SubscribeForm = () => {
 			setRequestInProgress(false);
 		}
 	};
+
 	return (
 		<>
 			{!status && (
-				<div className="relative w-full rounded-full bg-white p-2 dark:bg-neutral-950">
-					<input
-						ref={inputRef}
-						type="email"
-						placeholder="john@doe.com"
-						className="focus:outline-primary-600 dark:focus:outline-primary-500 left-3 top-3 w-full rounded-full p-3 text-base text-black outline-none dark:bg-neutral-950 dark:text-neutral-50"
-					/>
-					<button
-						disabled={requestInProgress}
-						onClick={subscribe}
-						className="bg-primary-600 dark:bg-primary-600 absolute right-3 top-3 rounded-full px-3 py-2 text-white disabled:cursor-not-allowed disabled:opacity-80"
-					>
-						Subscribe
-					</button>
-				</div>
+<div className="relative flex w-full items-center rounded-full border-4 border-white bg-white p-1 dark:border-neutral-800 dark:bg-neutral-900">
+	<input
+		ref={inputRef}
+		type="email"
+		placeholder="basakayush942@gmail.com"
+		className="w-full rounded-full bg-transparent px-4 py-2 text-sm text-black placeholder:text-gray-500 focus:outline-none dark:text-white dark:placeholder:text-neutral-400"
+	/>
+	<button
+		disabled={requestInProgress}
+		onClick={subscribe}
+		className="ml-2 shrink-0 rounded-full bg-green-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-70"
+	>
+		Subscribe
+	</button>
+</div>
 			)}
 			{status === 'PENDING' && (
 				<div className="relative w-full p-2 text-center">

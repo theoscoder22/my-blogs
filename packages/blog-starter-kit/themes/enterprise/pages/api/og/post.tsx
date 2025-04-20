@@ -77,7 +77,7 @@ export default async function handler(req: NextRequest) {
 					tw={`relative flex flex-col items-center p-10 ${
 						isDefaultModeDark ? 'bg-black' : 'bg-white'
 					} ${
-						isDefaultModeDark ? 'text-white' : 'text-slate-900'
+						isDefaultModeDark ? 'text-white' : 'text-[#efdecd]'
 					} h-full w-full rounded-xl shadow-md`}
 				>
 					<div tw="absolute -top-px -left-px -right-px -bottom-px rounded-xl border-2 border-black/5" />

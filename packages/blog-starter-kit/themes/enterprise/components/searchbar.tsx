@@ -77,73 +77,74 @@ export const Search = () => {
 			<Link
 				key={post.id}
 				href={postURL}
-				className="flex flex-row items-center gap-5 px-4 py-2 hover:bg-slate-50 focus:outline-1 dark:hover:bg-neutral-800"
+				className="flex items-center gap-4 rounded-xl p-4 transition hover:bg-slate-100 dark:hover:bg-neutral-800"
 			>
-				<div className="flex flex-col gap-1">
-					<strong className="text-base">{post.title}</strong>
-					<span className="text-slate-600 dark:text-neutral-300">
-						{post.brief.length > 140 ? post.brief.substring(0, 140) + '…' : post.brief}
-					</span>
-				</div>
-				<div className="w-56">
+				<div className="w-24 shrink-0 overflow-hidden rounded-lg">
 					<CoverImage
 						title={post.title}
 						src={resizeImage(
 							post.coverImage?.url,
-							{
-								w: 400,
-								h: 210,
-								c: 'thumb',
-							},
+							{ w: 300, h: 160, c: 'thumb' },
 							DEFAULT_COVER,
 						)}
 					/>
+				</div>
+				<div className="flex flex-col">
+					<h4 className="text-base font-semibold text-slate-800 dark:text-neutral-100">
+						{post.title}
+					</h4>
+					<p className="text-sm text-slate-600 dark:text-neutral-300">
+						{post.brief.length > 100 ? post.brief.slice(0, 100) + '…' : post.brief}
+					</p>
 				</div>
 			</Link>
 		);
 	});
 
+	const Skeleton = () => (
+		<div className="flex animate-pulse flex-row gap-4 rounded-xl bg-slate-50 p-4 dark:bg-neutral-800">
+			<div className="h-20 w-32 rounded-lg bg-slate-200 dark:bg-neutral-700" />
+			<div className="flex flex-col gap-2">
+				<div className="h-4 w-48 rounded bg-slate-200 dark:bg-neutral-700" />
+				<div className="h-3 w-64 rounded bg-slate-200 dark:bg-neutral-700" />
+				<div className="h-3 w-40 rounded bg-slate-200 dark:bg-neutral-700" />
+			</div>
+		</div>
+	);
+
 	return (
-		<div className="relative col-span-1">
+		<div className="relative col-span-1 w-full">
 			<input
 				type="text"
 				ref={searchInputRef}
 				onKeyUp={escapeSearchOnESC}
 				onChange={updateSearchQuery}
-				placeholder="Search blog posts…"
-				className="w-full rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-base focus:bg-transparent dark:border-neutral-800 dark:bg-neutral-800 dark:text-neutral-50 dark:placeholder:text-neutral-400 dark:hover:bg-neutral-950"
+				placeholder="🔍 Search blog posts…"
+				className="w-full rounded-full border-2 border-teal-400 bg-white px-5 py-3 text-sm shadow-sm transition focus:outline-none focus:ring-2 focus:ring-teal-400 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 dark:placeholder:text-neutral-500"
 			/>
+
 			{query && (
-				<>
-					{isSearching && (
-						<div className="top-100 absolute left-0 z-10 mt-1 flex w-full flex-col items-stretch overflow-hidden rounded-lg border bg-white p-1 text-left text-slate-900 shadow-2xl dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-50">
-							<div className="flex animate-pulse flex-col gap-1 p-4">
-								<div className="h-8 w-full rounded-lg bg-slate-100 dark:bg-neutral-800"></div>
-								<div className="h-4 w-full rounded-lg bg-slate-100 dark:bg-neutral-800"></div>
-								<div className="h-4 w-2/3 rounded-lg bg-slate-100 dark:bg-neutral-800"></div>
-							</div>
-							<div className="flex animate-pulse flex-col gap-1 p-4">
-								<div className="h-8 w-full rounded-lg bg-slate-100 dark:bg-neutral-800"></div>
-								<div className="h-4 w-full rounded-lg bg-slate-100 dark:bg-neutral-800"></div>
-								<div className="h-4 w-2/3 rounded-lg bg-slate-100 dark:bg-neutral-800"></div>
-							</div>
-							<div className="flex animate-pulse flex-col gap-1 p-4">
-								<div className="h-8 w-full rounded-lg bg-slate-100 dark:bg-neutral-800"></div>
-								<div className="h-4 w-full rounded-lg bg-slate-100 dark:bg-neutral-800"></div>
-								<div className="h-4 w-2/3 rounded-lg bg-slate-100 dark:bg-neutral-800"></div>
-							</div>
-						</div>
-					)}
-					{searchResults.length > 0 && !isSearching && (
-						<div className="top-100 absolute left-0 z-10 mt-1 flex w-full flex-col items-stretch overflow-hidden rounded-lg border bg-white p-1 text-left text-slate-900 shadow-2xl dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-50">
-							<h3 className="px-4 py-2 font-medium text-slate-500 dark:text-neutral-400">
-								Found {searchResults.length} results
-							</h3>
-							<hr className="dark:border-neutral-800" />
+				<div className="absolute left-0 z-10 mt-2 w-full rounded-xl border bg-white p-2 shadow-2xl dark:border-neutral-800 dark:bg-neutral-900">
+					{isSearching ? (
+						<>
+							<Skeleton />
+							<Skeleton />
+							<Skeleton />
+						</>
+					) : searchResults.length > 0 ? (
+						<>
+							<p className="px-2 pb-2 text-sm text-slate-500 dark:text-neutral-400">
+								Showing {searchResults.length} result{searchResults.length > 1 ? 's' : ''}
+							</p>
+							<hr className="mb-2 border-slate-100 dark:border-neutral-800" />
 							{searchResultsList}
+						</>
+					) : (
+						<div className="p-4 text-center text-sm text-slate-500 dark:text-neutral-400">
+							No results found.
 						</div>
 					)}
-				</>
+				</div>
 			)}
 		</div>
 	);

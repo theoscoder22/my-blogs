@@ -48,7 +48,12 @@ module.exports = {
       typography: (theme) => ({
         DEFAULT: {
           css: {
-            color: theme('colors.gray.300'),
+            color: '#efdecd',
+            h1: { color: '#efdecd' },
+            h2: { color: '#efdecd' },
+            h3: { color: '#efdecd' },
+            div:{backgroundColor:"#efdecd"},
+            p: { color: '#efdecd' },
             a: {
               color: theme('colors.primary'),
               textDecoration: 'none',
